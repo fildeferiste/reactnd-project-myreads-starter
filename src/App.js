@@ -15,11 +15,6 @@ class BooksApp extends React.Component {
 
 
   render() {
-    const readStatus = [
-      {status: 'Currently Reading'},
-      {status: 'Want to read'},
-      {status: 'Read'}
-    ]
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -52,11 +47,8 @@ class BooksApp extends React.Component {
         {/*List of books*/}
             <div className="list-books-content">
               <div>
-                {/* One bookshelf */}
-                <BookCategory/>
-                {/*Want to read */}
-                <BookCategory/>
-                {/* Read */}
+                {}
+                {/* All bookshelves and Categories */}
                 <BookCategory/>
               </div>
             </div>
@@ -79,45 +71,54 @@ class BookCategory extends React.Component {
                author: 'Harper Lee'},
               {title: 'Romeo and Juliet',
                author: 'William Shakespeare'},
-              /*{title: 'Buddenbrooks',
+              {title: 'Buddenbrooks',
               author: 'Thomas Mann'},
               {title: 'Ghosthouse',
               author: 'Isabel Allende'},
               {title: 'Purple Hibiscus',
-              author: 'Amamanda Ngozi Adichie'} */
+              author: 'Amamanda Ngozi Adichie'}
             ]
-    return (
+
+  const readStatus = [
+    {status: 'Currently Reading'},
+    {status: 'Want to read'},
+    {status: 'Read'}
+  ]
+
+  return (
       <div>
+        {readStatus.map(category=> (
           <div className="bookshelf">
-              <h2 className="bookshelf-title">Currently Reading</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
+            <h2 className="bookshelf-title">{category.status}</h2>
+            <div className="bookshelf-books">
+              <ol className="books-grid">
 
-                    {books.map(book =>(
-                              <li>
-                                <div className="book">
-                                  <div className="book-top">
-                                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")' }}>
-                                    </div>
-                                    <div className="book-shelf-changer">
-                                      <select>
-                                        <option value="move" disabled>Move to...</option>
-                                        <option value="currentlyReading">Currently Reading</option>
-                                        <option value="wantToRead">Want to Read</option>
-                                        <option value="read">Read</option>
-                                        <option value="none">None</option>
-                                      </select>
-                                    </div>
+                  {books.map(book =>(
+                            <li>
+                              <div className="book">
+                                <div className="book-top">
+                                  <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")' }}>
                                   </div>
-                                  <div className="book-title">{book.title}</div>
-                                  <div className="book-authors">{book.author}</div>
+                                  <div className="book-shelf-changer">
+                                    <select>
+                                      <option value="move" disabled>Move to...</option>
+                                      <option value="currentlyReading">Currently Reading</option>
+                                      <option value="wantToRead">Want to Read</option>
+                                      <option value="read">Read</option>
+                                      <option value="none">None</option>
+                                    </select>
+                                  </div>
                                 </div>
-                              </li>
-                    ))}
+                                <div className="book-title">{book.title}</div>
+                                <div className="book-authors">{book.author}</div>
+                              </div>
+                            </li>
+                  ))}
 
-                </ol>
-              </div>
+              </ol>
             </div>
+          </div>))}
+
       </div>  // Closing the main div
     )
   }
