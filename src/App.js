@@ -1,10 +1,11 @@
 import React from 'react'
-import * as BooksAPI from './BooksAPI'
 import './App.css'
 import BookCategory from './BookCategory.js'
+import * as BooksAPI from './BooksAPI'
 
 class BooksApp extends React.Component {
   state = {
+    books: [],
 
     /**
      * TODO: Instead of using this state variable to keep track of which page
@@ -14,23 +15,23 @@ class BooksApp extends React.Component {
      */
     showSearchPage: false
   }
-  
-books = [
-      {title: 'To kill a Mockingbird',
-       author: 'Harper Lee'},
-      {title: 'Romeo and Juliet',
-       author: 'William Shakespeare'},
-      {title: 'Buddenbrooks',
-      author: 'Thomas Mann'},
-      {title: 'Ghosthouse',
-      author: 'Isabel Allende'},
-      {title: 'Purple Hibiscus',
-      author: 'Amamanda Ngozi Adichie'}
-    ]
+
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({books})
+    })
+  }
+
+  changeShelf = (book) => {
+    this.setState((state) => ({
+      book: state.books.filter((b) => b.shelf === 'Read')
+    }))
+  }
+  // BooksAPI.changeShelf(book)
+
+
 
   render() {
-
-
     return (
       <div className="app">
         {/*Search Page*/}
@@ -64,7 +65,7 @@ books = [
         {/*List of books*/}
             <div className="list-books-content">
                 {/* All bookshelves and Categories */}
-                <BookCategory books={this.books} />
+                <BookCategory books={this.state.books} />
             </div>
 
         {/*Search */}
