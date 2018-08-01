@@ -13,9 +13,15 @@ class BooksApp extends React.Component {
     showSearchPage: false
   }
 
+
   render() {
     return (
-      <div className="app">
+      <div>
+        Autocomplete
+        <BookCategory/>
+      </div>
+
+      /*<div className="app">
         {this.state.showSearchPage ? (
           <div className="search-books">
             <div className="search-books-bar">
@@ -28,8 +34,8 @@ class BooksApp extends React.Component {
 
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
-                */}
-                <input type="text" placeholder="Search by title or author"/>
+                */ /*}
+      /*          <input type="text" placeholder="Search by title or author"/>
 
               </div>
             </div>
@@ -38,12 +44,17 @@ class BooksApp extends React.Component {
             </div>
           </div>
         ) : (
+
+        // Header
           <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
+
+        // List of books
             <div className="list-books-content">
               <div>
+              // One bookshelf
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
@@ -62,7 +73,7 @@ class BooksApp extends React.Component {
                               </select>
                             </div>
                           </div>
-                          <div className="book-title">To Kill a Mockingbird</div>
+                          <div className="book-title">To kill a Mockingbird</div>
                           <div className="book-authors">Harper Lee</div>
                         </div>
                       </li>
@@ -173,7 +184,7 @@ class BooksApp extends React.Component {
                       <li>
                         <div className="book">
                           <div className="book-top">
-                            <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: 'url("http://books.google.com/books/content?id=32haAAAAMAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72yckZ5f5bDFVIf7BGPbjA0KYYtlQ__nWB-hI_YZmZ-fScYwFy4O_fWOcPwf-pgv3pPQNJP_sT5J_xOUciD8WaKmevh1rUR-1jk7g1aCD_KeJaOpjVu0cm_11BBIUXdxbFkVMdi&source=gbs_api")' }}></div>
+                            <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: 'url("http://books.google.com/books/content?id=32haAAAAMAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72yckZ5f5bDFVIf7BGPbjA0KYYtlQ__nWB-hI_YZmZ-fScYwFy4O_fWOcPwf-pgv3pPQNJP_sT5J_xOUciD8WaKmevh1rUR-1jk7g1aCD_KeJaOpjVu0cm_11BBIUXdxbFkVMdi&source=gbs_api")'}}></div>
                             <div className="book-shelf-changer">
                               <select>
                                 <option value="move" disabled>Move to...</option>
@@ -198,8 +209,58 @@ class BooksApp extends React.Component {
             </div>
           </div>
         )}
-      </div>
+      </div> */
     )
+  }
+}
+
+class BookCategory extends React.Component {
+  render() {
+    const books = [
+              {title: 'To kill a Mockingbird',
+               author: 'Harper Lee'},
+              {title: 'Romeo and Juliet',
+               author: 'William Shakespeare'},
+              {title: 'Buddenbrooks',
+              author: 'Thomas Mann'},
+              {title: 'Ghosthouse',
+              author: 'Isabel Allende'},
+              {title: 'Purple Hibiscus',
+              author: 'Amamanda Ngozi Adichie'}
+            ]
+    return (
+      <div>Search Class Added
+          <div className="bookshelf">
+              <h2 className="bookshelf-title">Currently Reading</h2>
+              <div className="bookshelf-books">
+                <ol className="books-grid">
+                  <li>
+                    {books.map(book =>(
+                                <div className="book">
+                                  <div className="book-top">
+                                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")' }}>
+                                    </div>
+                                    <div className="book-shelf-changer">
+                                      <select>
+                                        <option value="move" disabled>Move to...</option>
+                                        <option value="currentlyReading">Currently Reading</option>
+                                        <option value="wantToRead">Want to Read</option>
+                                        <option value="read">Read</option>
+                                        <option value="none">None</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div className="book-title">{book.title}</div>
+                                  <div className="book-authors">{book.author}</div>
+                                </div>
+                              ))}
+                  </li>
+                </ol>
+              </div>
+            </div>
+      </div>  // Closing the main div
+
+)
   }
 }
 
