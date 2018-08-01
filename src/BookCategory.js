@@ -4,25 +4,24 @@ class BookCategory extends React.Component {
   render() {
 
   const readStatus = [
-    {status: 'Currently Reading'},
+    {status: 'Currently Reading', },
     {status: 'Want to read'},
     {status: 'Read'}
   ]
 
   return (
-      <div>
+      <div key='123'>
         {readStatus.map(category=> (
           <div className="bookshelf">
             <h2 className="bookshelf-title">{category.status}</h2>
             <div className="bookshelf-books">
               <ol className="books-grid">
 
-                {console.log(this.props)}
                 {this.props.books.map(book =>(
-                    <li>
+                    <li key={book.id}>
                       <div className="book">
                         <div className="book-top">
-                          <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")' }}>
+                          <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}>
                           </div>
                           <div className="book-shelf-changer">
                             <select>
@@ -35,7 +34,7 @@ class BookCategory extends React.Component {
                           </div>
                         </div>
                         <div className="book-title">{book.title}</div>
-                        <div className="book-authors">{book.author}</div>
+                        <div className="book-authors">{book.authors}</div>
                       </div>
                     </li>
                 ))}

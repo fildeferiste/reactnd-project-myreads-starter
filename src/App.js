@@ -16,12 +16,14 @@ class BooksApp extends React.Component {
     showSearchPage: false
   }
 
+// get Books from API
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({books})
     })
   }
 
+// sort by Category 
   changeShelf = (book) => {
     this.setState((state) => ({
       book: state.books.filter((b) => b.shelf === 'Read')
