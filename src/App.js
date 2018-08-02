@@ -12,7 +12,7 @@ class BooksApp extends React.Component {
           {},
           {}
         ], */
-    readStatus: [],
+    readStatus: '',
 
     /**
      * TODO: Instead of using this state variable to keep track of which page
@@ -43,9 +43,9 @@ class BooksApp extends React.Component {
 
   bo = (readStatus) =>  {this.setState((state, books) => ({  //this.setState((state) => ({
               readStatus:
-              ([state.books.filter((b) => b.shelf ===  'currentlyReading')]) //this.sortBooks.map((a => a.statusShelf))
-              //.push[(state.books.filter((b) => b.shelf === 'wantToRead' ))])
-            //  state.books.filter((b) => b.shelf == 'read' ) )
+              ([state.books.filter((b) => b.shelf ===  'currentlyReading'), //this.sortBooks.map((a => a.statusShelf))
+              state.books.filter((b) => b.shelf === 'wantToRead'),
+              state.books.filter((b) => b.shelf == 'read') ])
             }))}
 
 
