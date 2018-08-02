@@ -7,11 +7,12 @@ import * as BooksAPI from './BooksAPI'
 class BooksApp extends React.Component {
   state = {
     books: [],
-    readStatus: [
+    /* readStatus: [
           {},
           {},
           {}
-        ],
+        ], */
+    readStatus: '',
 
     /**
      * TODO: Instead of using this state variable to keep track of which page
@@ -28,6 +29,9 @@ class BooksApp extends React.Component {
     BooksAPI.getAll().then((books) => {
       this.setState({books})
     })
+          this.setState( //(state) => {
+            // readStatus: state.books.filter((b) => b.shelf === 'read'))
+            {readStatus: 'read'})
   }
 
   sortBooks = [
@@ -48,10 +52,14 @@ class BooksApp extends React.Component {
   // status = (readStatus) => {
   //   this.setstate
   //     }
-  status = (book) =>
-  this.setState((state) => {
-    readStatus: state.books.filter((b) => b.shelf === 'read')
-  })
+  //componentDidMount(){
+      //(readStatus) =>
+  //    this.setState( //(state) => {
+        // readStatus: state.books.filter((b) => b.shelf === 'read'))
+  //      readStatus: 'read'
+  //    )}
+  //}
+
 
 
 
@@ -96,7 +104,7 @@ class BooksApp extends React.Component {
         {/*Search */}
             <div className="open-search">
               <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-              <a onClick={() => this.currentlyReading(this.state.books)}></a>
+              {/*<a onClick={() => this.setState(this.status)}></a>*/}
             </div>
           </div>
         )}
