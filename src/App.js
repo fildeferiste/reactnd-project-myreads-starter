@@ -41,7 +41,8 @@ class BooksApp extends React.Component {
     {statusShelf: 'read'}
   ]
 
-  bo = (readStatus) =>  {this.setState((state, books) => ({  //this.setState((state) => ({
+  componentDidMount(books, readStatus)  {
+              this.setState((state, readStatus, books) => ({  //this.setState((state) => ({
               readStatus:
               ([state.books.filter((b) => b.shelf ===  'currentlyReading'), //this.sortBooks.map((a => a.statusShelf))
               state.books.filter((b) => b.shelf === 'wantToRead'),
