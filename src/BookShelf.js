@@ -5,13 +5,14 @@ import Books from './Books.js'
 
 class BookShelf extends React.Component {
 
+
   render() {
     if (this.props.readStatus.map(subarray => subarray.map(book=> book)) !== []) {
   return (
       <div key='123'>
         {this.props.readStatus.map(subarray =>(
         <div className="bookshelf">
-          <h2 className="bookshelf-title">BOOKS</h2>      {/* Fix this!*/}
+          <h2 className="bookshelf-title">{}</h2>      {/* Fix this!*/}
           <div className="bookshelf-books">
             <ol className="books-grid">
               {subarray.map( book => (
@@ -46,5 +47,3 @@ else {return (<div>Error</div>)
 }
 }
   export default BookShelf
-
-  /*console.log(this.props.readStatus.map(subarray => subarray.map(book=> book)))*/

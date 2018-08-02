@@ -7,12 +7,7 @@ import * as BooksAPI from './BooksAPI'
 class BooksApp extends React.Component {
   state = {
     books: [],
-     readStatus: [
-      // [{}],
-      // [{}],
-      // [{}]
-        ],
-    //readStatus: [],
+     readStatus: [],
 
     /**
      * TODO: Instead of using this state variable to keep track of which page
@@ -47,27 +42,14 @@ class BooksApp extends React.Component {
       }))}
 
 
-  // BooksAPI.changeShelf(book)
+  //BooksAPI.changeShelf(book)
 
-  /*removeBook = (book) => {   //maybe add one as well?
-    this.setState((state) => {
-      books: state.books.filter((b) => b.id !== book.id)
+  removeBook = (readStatus) => {
+    this.setState((state, readStatus) => {
+      readStatus:
+      state.readStatus.filter((b) => b.id !== readStatus.id)
     })
-  } */
-
-  // status = (readStatus) => {
-  //   this.setstate
-  //     }
-  //componentDidMount(){
-      //(readStatus) =>
-  //    this.setState( //(state) => {
-        // readStatus: state.books.filter((b) => b.shelf === 'read'))
-  //      readStatus: 'read'
-  //    )}
-  //}
-
-
-
+  }
 
   render() {
     return (
@@ -110,7 +92,6 @@ class BooksApp extends React.Component {
         {/*Search */}
             <div className="open-search">
               <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-            {/*  <a onClick={() => this.setState(this.bo)}></a>*/}
             </div>
           </div>
         )}
