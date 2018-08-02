@@ -5,17 +5,22 @@ import Books from './Books.js'
 import * as BooksAPI from './BooksAPI'
 
 class BooksApp extends React.Component {
-  state = {
-    books: [],
-     readStatus: [],
-     value: '',
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false
+  constructor(props) {
+    super(props)
+  this.state = {
+  books: [],
+   readStatus: [],
+   selectValue: '',
+  /**
+   * TODO: Instead of using this state variable to keep track of which page
+   * we're on, use the URL in the browser's address bar. This will ensure that
+   * users can use the browser's back and forward buttons to navigate between
+   * pages, as well as provide a good URL they can bookmark and share.
+   */
+  showSearchPage: false
+  }
+  this.handleClick = this.handleClick.bind(this)
+
   }
 
 
@@ -26,11 +31,9 @@ class BooksApp extends React.Component {
     }).then(this.bo)
   }
 
-  //this.handleClick =this.handleClick.bind(this)
-  handleClick(event) {
+  handleClick = (e) => {
     //e.preventDefault()
-    //this.setState({value: 'event.target.value'})
-    console.log('this is e')
+    this.setState({selectValue: e.target.value}, ()=> {console.log('this is e')})
   }
 
 
