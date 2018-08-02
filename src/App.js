@@ -1,11 +1,17 @@
 import React from 'react'
 import './App.css'
-import BookCategory from './BookCategory.js'
+import BookShelf from './BookShelf.js'
+import Books from './Books.js'
 import * as BooksAPI from './BooksAPI'
 
 class BooksApp extends React.Component {
   state = {
     books: [],
+    readStatus: [
+          {},
+          {},
+          {}
+        ],
 
     /**
      * TODO: Instead of using this state variable to keep track of which page
@@ -16,6 +22,7 @@ class BooksApp extends React.Component {
     showSearchPage: false
   }
 
+
 // get Books from API
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
@@ -23,13 +30,28 @@ class BooksApp extends React.Component {
     })
   }
 
-// sort by Category 
-  changeShelf = (book) => {
-    this.setState((state) => ({
-      book: state.books.filter((b) => b.shelf === 'Read')
-    }))
-  }
+  sortBooks = [
+    {status: 'Currently Reading'},
+    {status: 'Want to read'},
+    {status: 'Read'},
+  ]
+
+
   // BooksAPI.changeShelf(book)
+
+  removeBook = (book) => {   //maybe add one as well?
+    this.setState((state) => {
+      books: state.books.filter((b) => b.id === book.id)
+    })
+  }
+
+  // status = (readStatus) => {
+  //   this.setstate
+  //     }
+  status = (book) =>
+  this.setState((state) => {
+    readStatus: state.books.filter((b) => b.shelf === 'read')
+  })
 
 
 
@@ -67,12 +89,14 @@ class BooksApp extends React.Component {
         {/*List of books*/}
             <div className="list-books-content">
                 {/* All bookshelves and Categories */}
-                <BookCategory books={this.state.books} />
+                <BookShelf books={this.state.books} deleteBook={this.removeBook} sortBooks={this.sortBooks}/>
+                <div>{console.log(this.status)}</div>
             </div>
 
         {/*Search */}
             <div className="open-search">
               <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              <a onClick={() => this.currentlyReading(this.state.books)}></a>
             </div>
           </div>
         )}

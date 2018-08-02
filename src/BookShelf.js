@@ -1,19 +1,18 @@
 import React, {Component} from 'react'
+import Books from './Books.js'
 
-class BookCategory extends React.Component {
+
+
+class BookShelf extends React.Component {
+
   render() {
-
-  const readStatus = [
-    {status: 'Currently Reading', },
-    {status: 'Want to read'},
-    {status: 'Read'}
-  ]
 
   return (
       <div key='123'>
-        {readStatus.map(category=> (
+
+        {this.props.sortBooks.map(category=> (
           <div className="bookshelf">
-            <h2 className="bookshelf-title">{category.status}</h2>
+            <h2 className="bookshelf-title">{category.keys}</h2>      {/* Fix this!*/}
             <div className="bookshelf-books">
               <ol className="books-grid">
 
@@ -29,9 +28,10 @@ class BookCategory extends React.Component {
                               <option value="currentlyReading">Currently Reading</option>
                               <option value="wantToRead">Want to Read</option>
                               <option value="read">Read</option>
-                              <option value="none">None</option>
+                              <option value="none" onClick={() => this.props.deleteBook(book)}>None</option>
                             </select>
                           </div>
+                          {/*console.log(book)*/}
                         </div>
                         <div className="book-title">{book.title}</div>
                         <div className="book-authors">{book.authors}</div>
@@ -46,4 +46,4 @@ class BookCategory extends React.Component {
     )
   }
 }
-  export default BookCategory
+  export default BookShelf
