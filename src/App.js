@@ -29,16 +29,21 @@ class BooksApp extends React.Component {
     BooksAPI.getAll().then((books) => {
       this.setState({books})
     })
-          this.setState( //(state) => {
-            // readStatus: state.books.filter((b) => b.shelf === 'read'))
-            {readStatus: 'read'})
-  }
+    this.setState((state, books) => ({  //this.setState((state) => ({
+            books: state.books.filter((b) => b.shelf === 'read')
+          }))
+        //))
+}
 
   sortBooks = [
     {status: 'Currently Reading'},
     {status: 'Want to read'},
     {status: 'Read'},
   ]
+
+  bo = (book) =>  {this.setState((state, books) => ({  //this.setState((state) => ({
+              books: state.books.filter((b) => b.shelf === 'read')
+            }))}
 
 
   // BooksAPI.changeShelf(book)
@@ -104,7 +109,7 @@ class BooksApp extends React.Component {
         {/*Search */}
             <div className="open-search">
               <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-              {/*<a onClick={() => this.setState(this.status)}></a>*/}
+              <a onClick={() => this.setState(this.bo)}></a>
             </div>
           </div>
         )}
