@@ -41,8 +41,8 @@ class BooksApp extends React.Component {
     {status: 'Read'},
   ]
 
-  bo = (book) =>  {this.setState((state, books) => ({  //this.setState((state) => ({
-              books: state.books.filter((b) => b.shelf === 'read')
+  bo = (readStatus) =>  {this.setState((state, books) => ({  //this.setState((state) => ({
+              readStatus: state.books.filter((b) => b.shelf === 'read')
             }))}
 
 
