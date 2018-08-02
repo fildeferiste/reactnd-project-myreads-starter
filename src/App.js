@@ -7,12 +7,12 @@ import * as BooksAPI from './BooksAPI'
 class BooksApp extends React.Component {
   state = {
     books: [],
-    /* readStatus: [
-          {},
-          {},
-          {}
-        ], */
-    readStatus: '',
+     readStatus: [
+      // [{}],
+      // [{}],
+      // [{}]
+        ],
+    //readStatus: [],
 
     /**
      * TODO: Instead of using this state variable to keep track of which page
@@ -43,17 +43,17 @@ class BooksApp extends React.Component {
     readStatus:
       ([state.books.filter((b) => b.shelf ===  'currentlyReading'), //this.sortBooks.map((a => a.statusShelf))
       state.books.filter((b) => b.shelf === 'wantToRead'),
-      state.books.filter((b) => b.shelf == 'read') ])
+      state.books.filter((b) => b.shelf === 'read') ])
       }))}
 
 
   // BooksAPI.changeShelf(book)
 
-  removeBook = (book) => {   //maybe add one as well?
+  /*removeBook = (book) => {   //maybe add one as well?
     this.setState((state) => {
       books: state.books.filter((b) => b.id !== book.id)
     })
-  }
+  } */
 
   // status = (readStatus) => {
   //   this.setstate
@@ -104,7 +104,7 @@ class BooksApp extends React.Component {
             <div className="list-books-content">
                 {/* All bookshelves and Categories */}
                 <BookShelf books={this.state.books} deleteBook={this.removeBook} sortBooks={this.sortBooks}
-                  bookshelf={this.bo} readStatus={this.readStatus}/>
+                  bookshelf={this.bo} readStatus={this.state.readStatus}/>
             </div>
 
         {/*Search */}
