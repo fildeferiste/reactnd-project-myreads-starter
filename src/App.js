@@ -8,7 +8,7 @@ class BooksApp extends React.Component {
   state = {
     books: [],
      readStatus: [],
-
+     value: '',
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -26,6 +26,13 @@ class BooksApp extends React.Component {
     }).then(this.bo)
   }
 
+  //this.handleClick =this.handleClick.bind(this)
+  handleClick(event) {
+    //e.preventDefault()
+    //this.setState({value: 'event.target.value'})
+    console.log('this is e')
+  }
+
 
   sortBooks = [
     {statusShelf: 'currentlyReading'},
@@ -41,15 +48,20 @@ class BooksApp extends React.Component {
       state.books.filter((b) => b.shelf === 'read') ])
       }))}
 
+  changeCategory = (readStatus) => {
+    this.setState((state, readStatus) =>
+    {readStatus: "book1"}
+  )
+  }
 
   //BooksAPI.changeShelf(book)
 
-  removeBook = (readStatus) => {
+  /*removeBook = (readStatus) => {
     this.setState((state, readStatus) => {
       readStatus:
       state.readStatus.filter((b) => b.id !== readStatus.id)
     })
-  }
+  } */
 
   render() {
     return (
@@ -79,14 +91,15 @@ class BooksApp extends React.Component {
         ) : (
           <div className="list-books">
             <div className="list-books-title">
-              <h1>MyReads</h1>
+              <h1 onClick={()=>{console.log('A heading')}}>MyReads</h1>
             </div>
 
         {/*List of books*/}
             <div className="list-books-content">
                 {/* All bookshelves and Categories */}
-                <BookShelf books={this.state.books} deleteBook={this.removeBook} sortBooks={this.sortBooks}
-                  bookshelf={this.bo} readStatus={this.state.readStatus}/>
+                <BookShelf books={this.state.books} changeCategory={this.changeCategory} sortBooks={this.sortBooks}
+                  bookshelf={this.bo} readStatus={this.state.readStatus} handleClick={this.handleClick}
+                  value={this.state.value}/>
             </div>
 
         {/*Search */}

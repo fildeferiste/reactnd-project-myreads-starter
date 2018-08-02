@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import Books from './Books.js'
 
-
-
 class BookShelf extends React.Component {
 
 
@@ -23,12 +21,12 @@ class BookShelf extends React.Component {
                                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}>
                               </div>
                                   <div className="book-shelf-changer">
-                                    <select>
+                                    <select onClick={()=>{this.props.handleClick()}}>
                                       <option value="move" disabled>Move to...</option>
                                       <option value="currentlyReading">Currently Reading</option>
                                       <option value="wantToRead">Want to Read</option>
                                       <option value="read">Read</option>
-                                      <option value="none" onClick={() => this.props.deleteBook(book)}>None</option>
+                                      <option value="none">None</option>
                                     </select>
                                   </div>
                                 </div>
