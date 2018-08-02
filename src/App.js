@@ -28,12 +28,9 @@ class BooksApp extends React.Component {
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({books})
-    })
-  //  this.setState((state, books) => ({  //this.setState((state) => ({
-    //        books: state.books.filter((b) => b.shelf === 'read')
-      //    }))
-        //))
-}
+    }).then(this.bo)
+  }
+
 
   sortBooks = [
     {statusShelf: 'currentlyReading'},
@@ -42,19 +39,19 @@ class BooksApp extends React.Component {
   ]
 
   bo = (books) => {
-              this.setState((state, readStatus, books) => ({  //this.setState((state) => ({
-              readStatus:
-              ([state.books.filter((b) => b.shelf ===  'currentlyReading'), //this.sortBooks.map((a => a.statusShelf))
-              state.books.filter((b) => b.shelf === 'wantToRead'),
-              state.books.filter((b) => b.shelf == 'read') ])
-            }))}
+    this.setState((state, readStatus, books) => ({  //this.setState((state) => ({
+    readStatus:
+      ([state.books.filter((b) => b.shelf ===  'currentlyReading'), //this.sortBooks.map((a => a.statusShelf))
+      state.books.filter((b) => b.shelf === 'wantToRead'),
+      state.books.filter((b) => b.shelf == 'read') ])
+      }))}
 
 
   // BooksAPI.changeShelf(book)
 
   removeBook = (book) => {   //maybe add one as well?
     this.setState((state) => {
-      books: state.books.filter((b) => b.id == book.id)
+      books: state.books.filter((b) => b.id !== book.id)
     })
   }
 
@@ -106,14 +103,14 @@ class BooksApp extends React.Component {
         {/*List of books*/}
             <div className="list-books-content">
                 {/* All bookshelves and Categories */}
-                <BookShelf books={this.state.books} deleteBook={this.removeBook} sortBooks={this.sortBooks}/>
-                <div>{console.log(this.sortBooks.map.values)}</div>
+                <BookShelf books={this.state.books} deleteBook={this.removeBook} sortBooks={this.sortBooks}
+                  bookshelf={this.bo} readStatus={this.readStatus}/>
             </div>
 
         {/*Search */}
             <div className="open-search">
               <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-              <a onClick={() => this.setState(this.bo)}></a>
+            {/*  <a onClick={() => this.setState(this.bo)}></a>*/}
             </div>
           </div>
         )}

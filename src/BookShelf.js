@@ -9,12 +9,13 @@ class BookShelf extends React.Component {
 
   return (
       <div key='123'>
-
+        {this.props.bo}
         {this.props.sortBooks.map(category=> (
           <div className="bookshelf">
             <h2 className="bookshelf-title">{category.keys}</h2>      {/* Fix this!*/}
             <div className="bookshelf-books">
               <ol className="books-grid">
+                {console.log('bo '+this.props.bo)}
 
                 {this.props.books.map(book =>(
                     <li key={book.id}>
