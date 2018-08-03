@@ -3,6 +3,7 @@ import './App.css'
 import BookShelf from './BookShelf.js'
 import Books from './Books.js'
 import * as BooksAPI from './BooksAPI'
+import SearchBooksList from './SearchBooksList'
 
 class BooksApp extends React.Component {
   constructor(props) {
@@ -97,7 +98,7 @@ class BooksApp extends React.Component {
                   you don't find a specific author or title. Every search is limited by search terms.
                */}
               <input
-                    type = "text" 
+                    type = "text"
                     placeholder = "Search by title or author"
                     onChange = {this.onSearch}
                     ref = {input => this.search = input}
@@ -106,10 +107,14 @@ class BooksApp extends React.Component {
               </div>
             </div>
             <div className="search-books-results">
-              <ol className="books-grid"></ol>
+              <ol className="books-grid">
+                  <SearchBooksList query={this.state.query}/>
+              </ol>
             </div>
           </div>
+
         ) : (
+
           <div className="list-books">
             <div className="list-books-title">
               <h1 onClick={()=>{console.log('A heading')}}>MyReads</h1>
@@ -118,12 +123,16 @@ class BooksApp extends React.Component {
         {/*List of books*/}
             <div className="list-books-content">
                 {/* All bookshelves and Categories */}
-                <BookShelf books={this.state.books} changeCategory={this.changeCategory} sortBooks={this.sortBooks}
-                  bookshelf={this.bo} readStatus={this.state.readStatus} handleClick={this.handleClick}
-                  value={this.state.value}/>
+                <BookShelf books={this.state.books}
+                 changeCategory={this.changeCategory}
+                 sortBooks={this.sortBooks}
+                 bookshelf={this.bo}
+                 readStatus={this.state.readStatus}
+                 handleClick={this.handleClick}
+                 value={this.state.value}/>
             </div>
 
-        {/*Search */}
+        {/*  Button to search */}
             <div className="open-search">
               <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
             </div>
