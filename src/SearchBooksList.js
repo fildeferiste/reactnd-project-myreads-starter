@@ -1,4 +1,5 @@
 import React from 'react'
+import esacpeRegEx from 'escape-string-regexp'
 import * as BooksAPI from './BooksAPI'
 
 class SearchBooksList extends React.Component {
@@ -21,24 +22,33 @@ class SearchBooksList extends React.Component {
 
   // Search bar - write input in state.query
     onSearch = (e) => {
-      e.preventDefault()
       this.setState({
-        query: this.search.value
-      })
+        query: e.trim()})
     }
 
 
 
   render() {
+    let searchResults
+      if (this.state.query) {
+        const match = new RegExp(escapeRegExp(this.state.query), 'i')
+        searchResults = this.props.bookSearch(filter((book) => match.test(book.title)))
+      }
+      else {
+        searchResults = this.props.bookSearch
+      }
+
     return (
       <div>
         <div> Search book </div>
         <div> {console.log(this.state.bookSearch)} </div>
           <div className="search-books-input-wrapper">
               <input
+                  className =""
                   type = "text"
                   placeholder = "Search by title or author"
-                  onChange = {this.onSearch}
+                  value = {this.state.query}
+                  onChange = {(event) => this.onSearch(event.target.value)}
                   ref = {input => this.search = input}
                   />
           </div>
@@ -46,7 +56,7 @@ class SearchBooksList extends React.Component {
           <h2 className="bookshelf-title">{}</h2>      {/* Fix this!*/}
           <div className="bookshelf-books">
             <ol className="books-grid">
-              {this.state.bookSearch.map( book => (
+              {searchResults.map( book => (
                             <li key={book.id}>
                               {/*console.log(book)*/}
                               <div className="book">

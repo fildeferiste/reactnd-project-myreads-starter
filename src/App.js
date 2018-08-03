@@ -52,7 +52,7 @@ constructor(props) {
 
   changeCategory = (book) => //(readStatus) => {
     //this.setState((state, value, readStatus) =>
-    {console.log(this.state.books)
+    {console.log('')
      book.shelf = this.state.selectValue
     }
 //  )
