@@ -108,7 +108,7 @@ class BooksApp extends React.Component {
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-                  <SearchBooksList query={this.state.query}/>
+                  <SearchBooksList queryEx={this.state.query}/>
               </ol>
             </div>
           </div>
