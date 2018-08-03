@@ -2,18 +2,17 @@ import React from 'react'
 import './App.css'
 import BookShelf from './BookShelf.js'
 import Books from './Books.js'
-import BookShelfChanger from './BookShelfChanger'
 import * as BooksAPI from './BooksAPI'
 import SearchBooksList from './SearchBooksList'
 
 class BooksApp extends React.Component {
-  constructor(props) {
+constructor(props) {
     super(props)
     this.state = {
       books: [],
       readStatus: [],
-      selectValue: '',
       query: '',
+      selectedValue: '',
   /**
    * TODO: Instead of using this state variable to keep track of which page
    * we're on, use the URL in the browser's address bar. This will ensure that
@@ -24,7 +23,12 @@ class BooksApp extends React.Component {
     }
   //this.handleClick = this.handleClick.bind(this)
   }
-
+      handleClick = (e) => {
+        e.preventDefault()
+        this.setState({selectValue: e.target.value},
+          (state) => ({books: (this.state.books.map((shelf) => console.log(shelf)))})
+        )
+      }
 
 // get Books from API
   componentDidMount() {
@@ -127,7 +131,6 @@ class BooksApp extends React.Component {
                  handleClick={this.handleClick}
                  value={this.state.value}/>
 
-                 <BookShelfChanger/>
             </div>
 
         {/*  Button to search */}

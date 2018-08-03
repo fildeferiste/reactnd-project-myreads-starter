@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import Books from './Books.js'
+import BookShelfChanger from './BookShelfChanger'
+
 
 class BookShelf extends React.Component {
 
@@ -20,7 +22,7 @@ class BookShelf extends React.Component {
                                 <div className="book-top">
                                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}>
                               </div>
-
+                              <BookShelfChanger handleClick={this.props.handleClick}/>
                                 </div>
                                 <div className="book-title">{book.title}</div>
                                 <div className="book-authors">{book.authors}</div>
