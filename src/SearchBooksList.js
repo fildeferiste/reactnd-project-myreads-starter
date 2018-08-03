@@ -6,18 +6,23 @@ class SearchBooksList extends React.Component {
     bookSearch: [],
     query: ''
   }
-  componentDidUpdate(){
-      BooksAPI.search(this.state.query).then((bookSearch) => {
-        this.setState({bookSearch})
-      })
+  componentDidUpdate(prevProps, prevState){
+    this.setState((newState) =>
+{        if(newState !== prevState) {
+            console.log(newState.query + prevState.query)
+              //  BooksAPI.search(this.state.query).then((bookSearch) => {
+              //    this.setState({bookSearch})
+        }//)
+        else{console.log('This went wrong')}
+      }//}
+    )
   }
-  // Search bar
+  // Search bar - write input in state.query
     onSearch = (e) => {
       e.preventDefault()
       this.setState({
         query: this.search.value
       })
-      console.log('search-submit')
     }
 
 
