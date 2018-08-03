@@ -11,6 +11,7 @@ class BooksApp extends React.Component {
       books: [],
       readStatus: [],
       selectValue: '',
+      query: '',
   /**
    * TODO: Instead of using this state variable to keep track of which page
    * we're on, use the URL in the browser's address bar. This will ensure that
@@ -39,8 +40,12 @@ class BooksApp extends React.Component {
       //()=> {(this.state.books.map((this.shelf) = this.state.selectValue)})
   }
 
+// Search bar
   onSearch = (e) => {
     e.preventDefault()
+    this.setState({
+      query: this.search.value
+    })
     console.log('search-submit')
   }
 
@@ -91,7 +96,12 @@ class BooksApp extends React.Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                */}
-              <input type="text" placeholder="Search by title or author" onChange = {this.onSearch}/>
+              <input
+                    type = "text" 
+                    placeholder = "Search by title or author"
+                    onChange = {this.onSearch}
+                    ref = {input => this.search = input}
+                    />
 
               </div>
             </div>
