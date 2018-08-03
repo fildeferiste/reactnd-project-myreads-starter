@@ -7,20 +7,19 @@ import * as BooksAPI from './BooksAPI'
 class BooksApp extends React.Component {
   constructor(props) {
     super(props)
-  this.state = {
-  books: [],
-   readStatus: [],
-   selectValue: '',
+    this.state = {
+      books: [],
+      readStatus: [],
+      selectValue: '',
   /**
    * TODO: Instead of using this state variable to keep track of which page
    * we're on, use the URL in the browser's address bar. This will ensure that
    * users can use the browser's back and forward buttons to navigate between
    * pages, as well as provide a good URL they can bookmark and share.
    */
-  showSearchPage: false
-  }
+    showSearchPage: false
+    }
   this.handleClick = this.handleClick.bind(this)
-
   }
 
 
@@ -31,9 +30,18 @@ class BooksApp extends React.Component {
     }).then(this.bo)
   }
 
+// Dropdown Menu
   handleClick = (e) => {
-    //e.preventDefault()
-    this.setState({selectValue: e.target.value}, ()=> {console.log('this is e')})
+    e.preventDefault()
+    this.setState({selectValue: e.target.value},
+      (state) => ({books: (this.state.books.map((shelf) => console.log(shelf)))})
+    )
+      //()=> {(this.state.books.map((this.shelf) = this.state.selectValue)})
+  }
+
+  onSearch = (e) => {
+    e.preventDefault()
+    console.log('search-submit')
   }
 
 
@@ -52,8 +60,8 @@ class BooksApp extends React.Component {
       }))}
 
   changeCategory = (readStatus) => {
-    this.setState((state, readStatus) =>
-    {readStatus: "book1"}
+    this.setState((state, value, readStatus) =>
+    {readStatus: 'Value'}
   )
   }
 
@@ -83,7 +91,7 @@ class BooksApp extends React.Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                */}
-              <input type="text" placeholder="Search by title or author"/>
+              <input type="text" placeholder="Search by title or author" onChange = {this.onSearch}/>
 
               </div>
             </div>
