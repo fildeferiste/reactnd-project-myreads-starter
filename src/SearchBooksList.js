@@ -9,9 +9,9 @@ class SearchBooksList extends React.Component {
   componentDidUpdate(prevProps, prevState){
     this.setState((newState) =>
     { if (newState !== prevState) {
-      console.log(newState.query + prevState.query)
-        if (newState.query !== prevState.query) {
-               BooksAPI.search(this.state.query).then((bookSearch) => {
+      //console.log(newState.query + prevState.query)
+        if (String(newState.query) !== String(prevState.query)) {
+               BooksAPI.search(String(this.state.query)).then((bookSearch) => {
                   this.setState({bookSearch})
         })}
          }

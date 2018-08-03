@@ -2,6 +2,7 @@ import React from 'react'
 import './App.css'
 import BookShelf from './BookShelf.js'
 import Books from './Books.js'
+import BookShelfChanger from './BookShelfChanger'
 import * as BooksAPI from './BooksAPI'
 import SearchBooksList from './SearchBooksList'
 
@@ -21,7 +22,7 @@ class BooksApp extends React.Component {
    */
     showSearchPage: false
     }
-  this.handleClick = this.handleClick.bind(this)
+  //this.handleClick = this.handleClick.bind(this)
   }
 
 
@@ -33,13 +34,6 @@ class BooksApp extends React.Component {
   }
 
 // Dropdown Menu
-  handleClick = (e) => {
-    e.preventDefault()
-    this.setState({selectValue: e.target.value},
-      (state) => ({books: (this.state.books.map((shelf) => console.log(shelf)))})
-    )
-      //()=> {(this.state.books.map((this.shelf) = this.state.selectValue)})
-  }
 
 // Search bar
   onSearch = (e) => {
@@ -120,6 +114,8 @@ class BooksApp extends React.Component {
               <h1 onClick={()=>{console.log('A heading')}}>MyReads</h1>
             </div>
 
+
+
         {/*List of books*/}
             <div className="list-books-content">
                 {/* All bookshelves and Categories */}
@@ -130,6 +126,8 @@ class BooksApp extends React.Component {
                  readStatus={this.state.readStatus}
                  handleClick={this.handleClick}
                  value={this.state.value}/>
+
+                 <BookShelfChanger/>
             </div>
 
         {/*  Button to search */}
