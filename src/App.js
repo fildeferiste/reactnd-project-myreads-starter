@@ -12,7 +12,7 @@ constructor(props) {
       books: [],
       readStatus: [],
       query: '',
-      selectedValue: '',
+      selectValue: '',
   /**
    * TODO: Instead of using this state variable to keep track of which page
    * we're on, use the URL in the browser's address bar. This will ensure that
@@ -23,21 +23,40 @@ constructor(props) {
     }
   //this.handleClick = this.handleClick.bind(this)
   }
-      handleClick = (e) => {
-        e.preventDefault()
-        this.setState({selectValue: e.target.value},
-          (state) => ({books: (this.state.books.map((shelf) => console.log(shelf)))})
-        )
-      }
 
-// get Books from API
+// get Books from Server
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({books})
     }).then(this.bo)
   }
 
-// Dropdown Menu
+
+// sort the books according to their shelf
+  bo = (books) => {
+    this.setState((state, readStatus, books) => ({  //this.setState((state) => ({
+    readStatus:
+      ([state.books.filter((b) => b.shelf ===  'currentlyReading'),
+      state.books.filter((b) => b.shelf === 'wantToRead'),
+      state.books.filter((b) => b.shelf === 'read') ])
+      }))}
+
+  // Change selectValue on dropdown menu click
+  handleClick = (e) => {
+    e.preventDefault()
+    let x = e.target.value
+    this.setState({selectValue: x},
+      (state, x) => ({books: (this.state.books.map((book, x) => {this.changeCategory(book)}))})
+    )
+  }
+
+  changeCategory = (book) => //(readStatus) => {
+    //this.setState((state, value, readStatus) =>
+    {console.log(this.state.books)
+     book.shelf = this.state.selectValue
+    }
+//  )
+  //}
 
 // Search bar
   onSearch = (e) => {
@@ -49,25 +68,14 @@ constructor(props) {
   }
 
 
+// TODO: Can I be deleted?
   sortBooks = [
     {statusShelf: 'currentlyReading'},
     {statusShelf: 'wantToRead'},
     {statusShelf: 'read'}
   ]
 
-  bo = (books) => {
-    this.setState((state, readStatus, books) => ({  //this.setState((state) => ({
-    readStatus:
-      ([state.books.filter((b) => b.shelf ===  'currentlyReading'), //this.sortBooks.map((a => a.statusShelf))
-      state.books.filter((b) => b.shelf === 'wantToRead'),
-      state.books.filter((b) => b.shelf === 'read') ])
-      }))}
 
-  changeCategory = (readStatus) => {
-    this.setState((state, value, readStatus) =>
-    {readStatus: 'Value'}
-  )
-  }
 
   //BooksAPI.changeShelf(book)
 
