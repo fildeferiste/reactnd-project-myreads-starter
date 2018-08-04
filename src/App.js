@@ -2,7 +2,7 @@ import React from 'react'
 import {Route} from 'react-router-dom'
 import './App.css'
 import BookShelf from './BookShelf.js'
-import Books from './Books.js'
+import Header from './Header'
 import * as BooksAPI from './BooksAPI'
 import SearchBooksList from './SearchBooksList'
 import {Link} from 'react-router-dom'
@@ -94,48 +94,31 @@ constructor(props) {
     console.log('search-submit')
   }
 
-
-// TODO: Can I be deleted?
-  sortBooks = [
-    {statusShelf: 'currentlyReading'},
-    {statusShelf: 'wantToRead'},
-    {statusShelf: 'read'}
-  ]
-
-
-
-
-  /*removeBook = (readStatus) => {
-    this.setState((state, readStatus) => {
-      readStatus:
-      state.readStatus.filter((b) => b.id !== readStatus.id)
+// if book shelf = none
+removeBook = (book) => {
+    this.setState((stateNew) => {
+      books: this.state.books.filter((b) => b.id !== book.id)
     })
-  } */
+  }
 
   render() {
     return (
       <div className="app">
-        {/*Heading/Banner*/}
-        <div className="list-books">
-          <div className="list-books-title">
-            <h1>MyReads</h1>
-          </div>
-          </div>
 
         {/*Search Page*/}
         <Route path="/search" render={()=> (
               <SearchBooksList queryEx={this.state.query} handleClick={this.handleClick}/>
         )}/>
 
-
         {/*Bookshelves*/}
-                        {/* All bookshelves and Categories */}
-
         <Route exact path="/" render={()=> (
           <div>
+            {/*Heading/Banner*/}
+            <Header/>
+
+            {/* All bookshelves and Categories */}
             <BookShelf books={this.state.books}
             changeCategory={this.changeCategory}
-            sortBooks={this.sortBooks}
             bookshelf={this.bo}
             handleClick={this.handleClick}
             value={this.state.value}
@@ -144,7 +127,6 @@ constructor(props) {
 
             <BookShelf books={this.state.books}
             changeCategory={this.changeCategory}
-            sortBooks={this.sortBooks}
             bookshelf={this.bo}
             handleClick={this.handleClick}
             value={this.state.value}
@@ -153,29 +135,23 @@ constructor(props) {
 
             <BookShelf books={this.state.books}
             changeCategory={this.changeCategory}
-            sortBooks={this.sortBooks}
             bookshelf={this.bo}
             handleClick={this.handleClick}
             value={this.state.value}
             readStatus={this.state.read}
             heading = {'Read'}/>
 
-
             {/*Button to search */}
             <div className="open-search">
             <Link to="/search">Add a book</Link>
             </div>
           </div>
-
            )
-        } />
+         } />
       </div>
     )
   }
 }
-
-
-//}
 
 export default BooksApp
 
