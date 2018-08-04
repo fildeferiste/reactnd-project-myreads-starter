@@ -42,19 +42,25 @@ constructor(props) {
       }))}
 
   // Change selectValue on dropdown menu click
-  handleClick = (e) => {
-    e.preventDefault()
-    let x = e.target.value
-    this.setState({selectValue: x},
-      (state, x) => ({books: (this.state.books.map((book, x) => {this.changeCategory(book)}))})
+  handleClick = (book, e) => {
+    console.log(e)
+    console.log(book)
+          e.preventDefault()
+          let x = e.target.value
+        this.setState({selectValue: x},
+        console.log(this.props.book),
+        (state, x) => ({books: (this.state.books.map((book, x) => {this.changeCategory(book)}))})
+
     )
   }
 
-  changeCategory = (book) => //(readStatus) => {
+  changeCategory = (book) => {}//(readStatus) => {
     //this.setState((state, value, readStatus) =>
-    {console.log('')
-     book.shelf = this.state.selectValue
-    }
+    // {if book.id === e.target
+    //   console.log(book.id)
+    // if (book.id === this.state.book.id)
+    // { book.shelf = this.state.selectValue}
+    //}
 //  )
   //}
 
@@ -114,7 +120,7 @@ constructor(props) {
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-                  <SearchBooksList queryEx={this.state.query}/>
+                  <SearchBooksList queryEx={this.state.query} handleClick={this.handleClick}/>
               </ol>
             </div>
           </div>
