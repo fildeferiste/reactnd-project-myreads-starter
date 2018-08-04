@@ -8,14 +8,13 @@ class BookShelf extends React.Component {
 
   render() {
     return (
-            <div key='123'>
+            <div className="list-books-content">
               <div className="bookshelf">
                 <h2 className="bookshelf-title">{this.props.heading}</h2>      {/* Fix this! */}
                 <div className="bookshelf-books">
                   <ol className="books-grid">
                     {this.props.readStatus.map( (book) => (
                                   <li key={book.id}>
-                                    {console.log(book)}
                                     <div className="book">
                                       <div className="book-top">
                                         <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}>

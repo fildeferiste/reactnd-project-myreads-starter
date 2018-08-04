@@ -1,9 +1,11 @@
 import React from 'react'
+import {Route} from 'react-router-dom'
 import './App.css'
 import BookShelf from './BookShelf.js'
 import Books from './Books.js'
 import * as BooksAPI from './BooksAPI'
 import SearchBooksList from './SearchBooksList'
+import {Link} from 'react-router-dom'
 
 class BooksApp extends React.Component {
 constructor(props) {
@@ -12,17 +14,15 @@ constructor(props) {
       books: [],
       query: '',
       selectValue: '',
-      readStatus: [],
       currentlyReading: [],
       wantToRead: [],
-      read: [],
+      read: []
   /**
    * TODO: Instead of using this state variable to keep track of which page
    * we're on, use the URL in the browser's address bar. This will ensure that
    * users can use the browser's back and forward buttons to navigate between
    * pages, as well as provide a good URL they can bookmark and share.
    */
-    showSearchPage: false
     }
   //this.handleClick = this.handleClick.bind(this)
   }
@@ -66,9 +66,13 @@ constructor(props) {
             })
   }
 
-  componentDidUpdate(){
-    console.log('updated')
-    this.bo
+
+  componentWillUpdate(prevProps, prevState){
+    console.log('updated '+ this.state.books)
+    this.setState((newState) =>
+    {if (prevState !== newState){
+          this.bo(newState.books)
+    }})
   }
 
   changeCategory = (book) => {}//(readStatus) => {
@@ -100,7 +104,6 @@ constructor(props) {
 
 
 
-  //BooksAPI.changeShelf(book)
 
   /*removeBook = (readStatus) => {
     this.setState((state, readStatus) => {
@@ -112,83 +115,60 @@ constructor(props) {
   render() {
     return (
       <div className="app">
+        {/*Heading/Banner*/}
+        <div className="list-books">
+          <div className="list-books-title">
+            <h1>MyReads</h1>
+          </div>
+          </div>
+
         {/*Search Page*/}
-        {this.state.showSearchPage ? (
-          <div className="search-books">
-            <div className="search-books-bar">
-              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
-              <div className="search-books-input-wrapper">
-                {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-               */}
-              <input
-                    type = "text"
-                    placeholder = "Search by title or author"
-                    onChange = {this.onSearch}
-                    ref = {input => this.search = input}
-                    />
-
-              </div>
-            </div>
-            <div className="search-books-results">
-              <ol className="books-grid">
-                  <SearchBooksList queryEx={this.state.query} handleClick={this.handleClick}/>
-              </ol>
-            </div>
-          </div>
-
-        ) : (
-
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1 onClick={()=>{console.log('A heading')}}>MyReads</h1>
-            </div>
+        <Route path="/search" render={()=> (
+              <SearchBooksList queryEx={this.state.query} handleClick={this.handleClick}/>
+        )}/>
 
 
+        {/*Bookshelves*/}
+                        {/* All bookshelves and Categories */}
 
-        {/*List of books*/}
-            <div className="list-books-content">
-                {/* All bookshelves and Categories */}
-                <BookShelf books={this.state.books}
-                 changeCategory={this.changeCategory}
-                 sortBooks={this.sortBooks}
-                 bookshelf={this.bo}
-                 handleClick={this.handleClick}
-                 value={this.state.value}
-                 readStatus= {this.state.currentlyReading}
-                 heading = {'Currently Reading'}/>
+        <Route exact path="/" render={()=> (
+          <div>
+            <BookShelf books={this.state.books}
+            changeCategory={this.changeCategory}
+            sortBooks={this.sortBooks}
+            bookshelf={this.bo}
+            handleClick={this.handleClick}
+            value={this.state.value}
+            readStatus= {this.state.currentlyReading}
+            heading = {'Currently Reading'}/>
 
-                 <BookShelf books={this.state.books}
-                  changeCategory={this.changeCategory}
-                  sortBooks={this.sortBooks}
-                  bookshelf={this.bo}
-                  handleClick={this.handleClick}
-                  value={this.state.value}
-                  readStatus={this.state.wantToRead}
-                  heading= {'Want to read'}/>
+            <BookShelf books={this.state.books}
+            changeCategory={this.changeCategory}
+            sortBooks={this.sortBooks}
+            bookshelf={this.bo}
+            handleClick={this.handleClick}
+            value={this.state.value}
+            readStatus={this.state.wantToRead}
+            heading= {'Want to read'}/>
 
-              <BookShelf books={this.state.books}
-               changeCategory={this.changeCategory}
-               sortBooks={this.sortBooks}
-               bookshelf={this.bo}
-               handleClick={this.handleClick}
-               value={this.state.value}
-               readStatus={this.state.read}
-               heading = {'Read'}/>
+            <BookShelf books={this.state.books}
+            changeCategory={this.changeCategory}
+            sortBooks={this.sortBooks}
+            bookshelf={this.bo}
+            handleClick={this.handleClick}
+            value={this.state.value}
+            readStatus={this.state.read}
+            heading = {'Read'}/>
 
-            </div>
 
-        {/*  Button to search */}
+            {/*Button to search */}
             <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+            <Link to="/search">Add a book</Link>
             </div>
           </div>
-        )}
+
+           )
+        } />
       </div>
     )
   }
@@ -198,3 +178,5 @@ constructor(props) {
 //}
 
 export default BooksApp
+
+//https://dev.to/sage911/how-to-write-a-search-component-with-suggestions-in-react-d20

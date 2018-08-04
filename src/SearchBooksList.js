@@ -2,6 +2,8 @@ import React from 'react'
 import escapeRegExp from 'escape-string-regexp'
 import * as BooksAPI from './BooksAPI'
 import BookShelfChanger from './BookShelfChanger'
+import {Link} from 'react-router-dom'
+
 
 
 class SearchBooksList extends React.Component {
@@ -33,7 +35,7 @@ componentDidUpdate(prevProps, prevState){
 
     ).catch('nope')}
     else {
-      console.log('Nothing has changed.')
+      //console.log('Nothing has changed.')
       ({bookSearch : []})
     }}
 )
@@ -88,13 +90,12 @@ componentDidUpdate(prevProps, prevState){
 
     return (
       <div>
-        <div> {console.log('bookResults')} </div>
           <div className="search-books">
             <div className="search-books-bar">
-              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
+              <Link to="/" className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</Link>
               <div className="search-books-input-wrapper">
                 <input
-                    type = "email"
+                    type = "text"
                     placeholder = "Search by title or author"
                     value = {this.state.query}
                     onChange = {(event) => this.onSearch(event.target.value)}
@@ -126,6 +127,7 @@ componentDidUpdate(prevProps, prevState){
                     </div>
 
         </div>
+
     )
   }
 
