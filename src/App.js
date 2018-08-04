@@ -10,9 +10,12 @@ constructor(props) {
     super(props)
     this.state = {
       books: [],
-      readStatus: [],
       query: '',
       selectValue: '',
+      readStatus: [],
+      currentlyReading: [],
+      wantToRead: [],
+      read: [],
   /**
    * TODO: Instead of using this state variable to keep track of which page
    * we're on, use the URL in the browser's address bar. This will ensure that
@@ -35,12 +38,11 @@ constructor(props) {
 // sort the books according to their shelf
   bo = (books) => {
     console.log('called')
-    this.setState((state, books) => ({  //this.setState((state) => ({
-    readStatus:
-      ([state.books.filter((b) => b.shelf ===  'currentlyReading'),
-      state.books.filter((b) => b.shelf === 'wantToRead'),
-      state.books.filter((b) => b.shelf === 'read') ])
-      }))}
+    this.setState( {      //(state, books) =>
+    currentlyReading: this.state.books.filter((b) => b.shelf ===  'currentlyReading'),
+    wantToRead: this.state.books.filter((b) => b.shelf === 'wantToRead'),
+    read: this.state.books.filter((b) => b.shelf === 'read')
+  })}
 
   // Change selectValue on dropdown menu click
   handleClick = (bookNewShelf, e) => {
@@ -156,9 +158,28 @@ constructor(props) {
                  changeCategory={this.changeCategory}
                  sortBooks={this.sortBooks}
                  bookshelf={this.bo}
-                 readStatus={this.state.readStatus}
                  handleClick={this.handleClick}
-                 value={this.state.value}/>
+                 value={this.state.value}
+                 readStatus= {this.state.currentlyReading}
+                 heading = {'Currently Reading'}/>
+
+                 <BookShelf books={this.state.books}
+                  changeCategory={this.changeCategory}
+                  sortBooks={this.sortBooks}
+                  bookshelf={this.bo}
+                  handleClick={this.handleClick}
+                  value={this.state.value}
+                  readStatus={this.state.wantToRead}
+                  heading= {'Want to read'}/>
+
+              <BookShelf books={this.state.books}
+               changeCategory={this.changeCategory}
+               sortBooks={this.sortBooks}
+               bookshelf={this.bo}
+               handleClick={this.handleClick}
+               value={this.state.value}
+               readStatus={this.state.read}
+               heading = {'Read'}/>
 
             </div>
 
