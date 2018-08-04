@@ -3,9 +3,8 @@ import React from 'react'
 
 class BookShelfChanger extends React.Component {
 
-
       render() {
-                  let book = this.props.book
+        let book = this.props.book
 
         return (
           <div className="book-shelf-changer">
@@ -19,9 +18,6 @@ class BookShelfChanger extends React.Component {
           </div>
         )
       }
-
-
-
 }
 
 export default BookShelfChanger

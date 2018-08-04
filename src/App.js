@@ -34,7 +34,8 @@ constructor(props) {
 
 // sort the books according to their shelf
   bo = (books) => {
-    this.setState((state, readStatus, books) => ({  //this.setState((state) => ({
+    console.log('called')
+    this.setState((state, books) => ({  //this.setState((state) => ({
     readStatus:
       ([state.books.filter((b) => b.shelf ===  'currentlyReading'),
       state.books.filter((b) => b.shelf === 'wantToRead'),
@@ -53,7 +54,7 @@ constructor(props) {
             y=  this.state.books.filter((book) => book.id == bookNewShelf.book.id),
             console.log(y)
             y[0].shelf = x
-            z= this.state.books.forEach(function(book, index){
+            z=this.state.books.forEach(function(book, index){
               if (book.id === y[0].id) {
                 book=y
               }
@@ -61,6 +62,11 @@ constructor(props) {
                 book = book
               }
             })
+  }
+
+  componentDidUpdate(){
+    console.log('updated')
+    this.bo
   }
 
   changeCategory = (book) => {}//(readStatus) => {
