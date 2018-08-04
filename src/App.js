@@ -12,7 +12,6 @@ constructor(props) {
     super(props)
     this.state = {
       books: [],
-      query: '',
       selectValue: '',
       currentlyReading: [],
       wantToRead: [],
@@ -34,11 +33,12 @@ constructor(props) {
     }).then(this.bo)
   }
 
+//----------------------------------BookShelfs sort-------------------------//
 
 // sort the books according to their shelf
   bo = (books) => {
     console.log('called')
-    this.setState( {      //(state, books) =>
+    this.setState( {
     currentlyReading: this.state.books.filter((b) => b.shelf ===  'currentlyReading'),
     wantToRead: this.state.books.filter((b) => b.shelf === 'wantToRead'),
     read: this.state.books.filter((b) => b.shelf === 'read')
@@ -55,16 +55,24 @@ constructor(props) {
             console.log(this.state.books),
             y=  this.state.books.filter((book) => book.id == bookNewShelf.book.id),
             console.log(y)
-            y[0].shelf = x
+            y=y[0]
+            y.shelf = x
             z=this.state.books.forEach(function(book, index){
-              if (book.id === y[0].id) {
+              if (book.id === y.id) {
                 book=y
               }
-              else if (book.id !== y[0].id) {
+              else if (book.id !== y.id) {
                 book = book
               }
             })
   }
+
+  // if book shelf = none
+  removeBook = (book) => {
+      this.setState((stateNew) => {
+        books: this.state.books.filter((b) => b.id !== book.id)
+      })
+    }
 
 
   componentWillUpdate(prevProps, prevState){
@@ -94,12 +102,6 @@ constructor(props) {
     console.log('search-submit')
   }
 
-// if book shelf = none
-removeBook = (book) => {
-    this.setState((stateNew) => {
-      books: this.state.books.filter((b) => b.id !== book.id)
-    })
-  }
 
   render() {
     return (
@@ -107,7 +109,7 @@ removeBook = (book) => {
 
         {/*Search Page*/}
         <Route path="/search" render={()=> (
-              <SearchBooksList queryEx={this.state.query} handleClick={this.handleClick}/>
+              <SearchBooksList handleClick={this.handleClick}/>
         )}/>
 
         {/*Bookshelves*/}

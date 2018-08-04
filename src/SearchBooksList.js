@@ -13,17 +13,24 @@ class SearchBooksList extends React.Component {
   }
 
   ifclause = (bookSearch) =>{
-    console.log('workaround' +bookSearch)
+    console.log('workaround')
     if (bookSearch) {
       this.state.bookSearch = bookSearch
+      console.log(bookSearch)
+      if (bookSearch.error){
+        console.log('error in if in if')
+        this.state.bookSearch = []}
     }
     else if (bookSearch === undefined || bookSearch === []) {
       bookSearch => this.setState({})
     }
+    else if (bookSearch.error){
+      console.log('error!!!!!!!!!!!!')
+    }
   }
 
 
-componentDidUpdate(prevProps, prevState){
+/*componentDidUpdate(prevProps, prevState){
   this.setState((newState)=>
   // only update bookSearch, when state and query have changed
     {if (prevState !== newState && newState.query !== prevState.query){
@@ -39,7 +46,7 @@ componentDidUpdate(prevProps, prevState){
       ({bookSearch : []})
     }}
 )
-}
+} */
 
 
 
@@ -63,43 +70,41 @@ componentDidUpdate(prevProps, prevState){
   // Search bar - write input in state.query
     onSearch = (e) => {
       this.setState({
-        query: e.trim()})
+        query: e})
+        this.updateBookSearch(e)
     }
+
+updateBookSearch = (query) => {
+  //let searchResults = []
+        BooksAPI.search(query).then( (bookSearch) => {
+          if (!bookSearch || bookSearch.error){
+            console.log('if-clause')
+            this.setState({bookSearch : []})
+            return bookSearch}
+          else if (Array.isArray(bookSearch) && bookSearch!==[]) {
+            console.log('yes')
+          }
+          if (this.state.bookSearch !== bookSearch) {
+            this.setState({bookSearch: bookSearch})
+          }
+
+        }).catch(e => console.log(e))}
 
 
 
   render() {
-/*    let searchResults = []
-      if (this.state.query) {
-      const match = new RegExp(escapeRegExp(this.state.query), 'i')
-      console.log(this.state.bookSearch)
-                  if (this.state.bookSearch.length === 0) {
-                    console.log('only one book left')
-                  }
-      searchResults = this.state.bookSearch.filter((book) => match.test(book.title))
-
-
-
-      }
-
-      else {
-          searchResults = []
-          } */
-
-
 
     return (
       <div>
           <div className="search-books">
             <div className="search-books-bar">
-              <Link to="/" className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</Link>
+              <Link to="/" className="close-search">Close</Link>
               <div className="search-books-input-wrapper">
                 <input
                     type = "text"
                     placeholder = "Search by title or author"
                     value = {this.state.query}
                     onChange = {(event) => this.onSearch(event.target.value)}
-                    ref = {input => this.search = input}
                     />
               </div>
             </div>
@@ -138,3 +143,4 @@ export default SearchBooksList
 
 // Great thanks to:
 //https://dev.to/sage911/how-to-write-a-search-component-with-suggestions-in-react-d20
+                    {/*ref = {input => this.search = input}*/}
