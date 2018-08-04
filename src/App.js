@@ -13,9 +13,9 @@ constructor(props) {
     this.state = {
       books: [],
       selectValue: '',
-      currentlyReading: [],
-      wantToRead: [],
-      read: []
+    //  currentlyReading: [],
+    //  wantToRead: [],
+    //  read: []
   /**
    * TODO: Instead of using this state variable to keep track of which page
    * we're on, use the URL in the browser's address bar. This will ensure that
@@ -36,13 +36,13 @@ constructor(props) {
 //----------------------------------BookShelfs sort-------------------------//
 
 // sort the books according to their shelf
-  bo = (books) => {
+/*  bo = (books) => {
     console.log('called')
     this.setState( {
     currentlyReading: this.state.books.filter((b) => b.shelf ===  'currentlyReading'),
     wantToRead: this.state.books.filter((b) => b.shelf === 'wantToRead'),
     read: this.state.books.filter((b) => b.shelf === 'read')
-  })}
+  })} */
 
   // Change selectValue on dropdown menu click
   handleClick = (bookNewShelf, e) => {
@@ -91,7 +91,7 @@ constructor(props) {
     }})
   }
 
-  changeCategory = (book) => {}//(readStatus) => {
+  //changeCategory = (book) => {}//(readStatus) => {
     //this.setState((state, value, readStatus) =>
     // {if book.id === e.target
     //   console.log(book.id)
