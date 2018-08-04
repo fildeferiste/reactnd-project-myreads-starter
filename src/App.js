@@ -42,16 +42,25 @@ constructor(props) {
       }))}
 
   // Change selectValue on dropdown menu click
-  handleClick = (book, e) => {
+  handleClick = (bookNewShelf, e) => {
+    let x, y,z
     console.log(e)
-    console.log(book)
+    console.log(bookNewShelf.book.id)
           e.preventDefault()
-          let x = e.target.value
-        this.setState({selectValue: x},
-        console.log(this.props.book),
-        (state, x) => ({books: (this.state.books.map((book, x) => {this.changeCategory(book)}))})
-
-    )
+          x = e.target.value
+          this.setState({selectValue: x}),
+            console.log(this.state.books),
+            y=  this.state.books.filter((book) => book.id == bookNewShelf.book.id),
+            console.log(y)
+            y[0].shelf = x
+            z= this.state.books.forEach(function(book, index){
+              if (book.id === y[0].id) {
+                book=y
+              }
+              else if (book.id !== y[0].id) {
+                book = book
+              }
+            })
   }
 
   changeCategory = (book) => {}//(readStatus) => {
