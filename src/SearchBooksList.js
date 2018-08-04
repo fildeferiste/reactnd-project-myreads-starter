@@ -1,5 +1,5 @@
 import React from 'react'
-import esacpeRegEx from 'escape-string-regexp'
+import escapeRegExp from 'escape-string-regexp'
 import * as BooksAPI from './BooksAPI'
 
 class SearchBooksList extends React.Component {
@@ -7,18 +7,54 @@ class SearchBooksList extends React.Component {
     bookSearch: [],
     query: ''
   }
-  componentDidUpdate(prevProps, prevState){
-    this.setState((newState) =>
+
+  ifclause = (bookSearch) =>{
+    console.log('workaround' +bookSearch)
+    if (bookSearch) {
+      this.state.bookSearch = bookSearch
+    }
+    else if (bookSearch === undefined || bookSearch === []) {
+      bookSearch => this.setState({})
+    }
+  }
+
+
+componentDidUpdate(prevProps, prevState){
+  this.setState((newState)=>
+  // only update bookSearch, when state and query have changed
+    {if (prevState !== newState && newState.query !== prevState.query){
+      console.log('Something has changed')
+      // get Books from search API
+      BooksAPI.search(this.state.query).then(
+        // return a value for book search
+        (response) => this.ifclause(response)
+
+    ).catch('nope')}
+    else {
+      console.log('Nothing has changed.')
+      ({bookSearch : []})
+    }}
+)
+}
+
+
+
+/*  componentDidUpdate(prevProps, prevState){
+    this.setState(
+
+      (newState) =>
     { if (newState !== prevState) {
-      //console.log(newState.query + prevState.query)
         if (String(newState.query) !== String(prevState.query)) {
                BooksAPI.search(String(this.state.query)).then((bookSearch) => {
                   this.setState({bookSearch})
-        })}
+
+        }).catch(
+            this.state.bookSearch = [])
+            }
          }
         else{console.log('This went wrong')}
       })
-}
+} */
 
   // Search bar - write input in state.query
     onSearch = (e) => {
@@ -29,36 +65,50 @@ class SearchBooksList extends React.Component {
 
 
   render() {
-    let searchResults
+/*    let searchResults = []
       if (this.state.query) {
-        const match = new RegExp(escapeRegExp(this.state.query), 'i')
-        searchResults = this.props.bookSearch(filter((book) => match.test(book.title)))
+      const match = new RegExp(escapeRegExp(this.state.query), 'i')
+      console.log(this.state.bookSearch)
+                  if (this.state.bookSearch.length === 0) {
+                    console.log('only one book left')
+                  }
+      searchResults = this.state.bookSearch.filter((book) => match.test(book.title))
+
+
+
       }
+
       else {
-        searchResults = this.props.bookSearch
-      }
+          searchResults = []
+          } */
+
+
 
     return (
       <div>
-        <div> Search book </div>
-        <div> {console.log(this.state.bookSearch)} </div>
-          <div className="search-books-input-wrapper">
-              <input
-                  className =""
-                  type = "text"
-                  placeholder = "Search by title or author"
-                  value = {this.state.query}
-                  onChange = {(event) => this.onSearch(event.target.value)}
-                  ref = {input => this.search = input}
-                  />
+        <div> {console.log('bookResults')} </div>
+          <div className="search-books">
+            <div className="search-books-bar">
+              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
+              <div className="search-books-input-wrapper">
+                <input
+                    type = "email"
+                    placeholder = "Search by title or author"
+                    value = {this.state.query}
+                    onChange = {(event) => this.onSearch(event.target.value)}
+                    ref = {input => this.search = input}
+                    />
+              </div>
+            </div>
           </div>
+
+
         <div className="bookshelf">
-          <h2 className="bookshelf-title">{}</h2>      {/* Fix this!*/}
+          <h2 className="bookshelf-title">Search Results</h2>
           <div className="bookshelf-books">
             <ol className="books-grid">
-              {searchResults.map( book => (
+              {this.state.bookSearch.map( book => (
                             <li key={book.id}>
-                              {/*console.log(book)*/}
                               <div className="book">
                                 <div className="book-top">
                                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}>
