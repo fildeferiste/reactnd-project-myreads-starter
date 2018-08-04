@@ -13,9 +13,6 @@ constructor(props) {
     this.state = {
       books: [],
       selectValue: '',
-    //  currentlyReading: [],
-    //  wantToRead: [],
-    //  read: []
   /**
    * TODO: Instead of using this state variable to keep track of which page
    * we're on, use the URL in the browser's address bar. This will ensure that
@@ -34,22 +31,9 @@ constructor(props) {
   }
 
 //----------------------------------BookShelfs sort-------------------------//
-
-// sort the books according to their shelf
-/*  bo = (books) => {
-    console.log('called')
-    this.setState( {
-    currentlyReading: this.state.books.filter((b) => b.shelf ===  'currentlyReading'),
-    wantToRead: this.state.books.filter((b) => b.shelf === 'wantToRead'),
-    read: this.state.books.filter((b) => b.shelf === 'read')
-  })} */
-
   // Change selectValue on dropdown menu click
   handleClick = (bookNewShelf, e) => {
-    let x, y,z
-    console.log(e)
-    console.log(bookNewShelf.book.id)
-          //e.preventDefault()
+    let x, y
           x = e.target.value
           this.setState({selectValue: x}),
             console.log(this.state.books),
@@ -91,16 +75,6 @@ constructor(props) {
     }})
   }
 
-  //changeCategory = (book) => {}//(readStatus) => {
-    //this.setState((state, value, readStatus) =>
-    // {if book.id === e.target
-    //   console.log(book.id)
-    // if (book.id === this.state.book.id)
-    // { book.shelf = this.state.selectValue}
-    //}
-//  )
-  //}
-
 // Search bar
   onSearch = (e) => {
     e.preventDefault()
@@ -128,22 +102,16 @@ constructor(props) {
 
             {/* All bookshelves and Categories */}
             <BookShelf books={this.state.books}
-            changeCategory={this.changeCategory}
-            bookshelf={this.bo}
             handleClick={this.handleClick}
             readStatus= { this.state.books.filter((b) => b.shelf ===  'currentlyReading')}
             heading = {'Currently Reading'}/>
 
             <BookShelf books={this.state.books}
-            changeCategory={this.changeCategory}
-            bookshelf={this.bo}
             handleClick={this.handleClick}
             readStatus= { this.state.books.filter((b) => b.shelf ===  'wantToRead')}
             heading= {'Want to read'}/>
 
             <BookShelf books={this.state.books}
-            changeCategory={this.changeCategory}
-            bookshelf={this.bo}
             handleClick={this.handleClick}
             readStatus= { this.state.books.filter((b) => b.shelf ===  'read')}
             heading = {'Read'}/>
