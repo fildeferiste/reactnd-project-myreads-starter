@@ -84,19 +84,36 @@ handleNewBook = (bookNewShelf, e) => {
           {response.shelf = x
           this.setState({newBook:  response})
           y=  this.state.books.filter((book) => book.id === bookNewShelf.book.id)
-          if (y) {
-            console.log('y '+ this.state.books)
-            console.log('z '+z)
+          console.log(y.length)
+          // book id doesn't exist in books
+          if (y.length === 0) {
+            console.log('y '+ y)
             this.setState((state)=>{
-              books: this.state.books.push(this.state.newBook)
-            })
-            // update on server
-            BooksAPI.update(this.state.newBook, x)
-
+                books: this.state.books.push(this.state.newBook)
+              })
+              // update on server
+              BooksAPI.update(this.state.newBook, x)
           }
-
-      }).catch(console.log('A problem.'))
-}
+         else if (y.length > 0){
+            y=  this.state.books.filter((book) => book.id === bookNewShelf.book.id)
+            console.log(y)
+            y=y[0]
+            y.shelf = x
+            z=this.setState((state) => {
+          books:  {this.state.books.forEach(function(book, index){
+                if (book.id === y.id) {
+                  book=y
+                  // update on server
+                  BooksAPI.update(y, x)
+                }
+                else if (book.id !== y.id) {
+                  book = book
+                }
+              })}
+        })
+          }
+         }
+).catch(console.log('A problem.')) }
 
 
   render() {
