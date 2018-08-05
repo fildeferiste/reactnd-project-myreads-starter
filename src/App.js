@@ -14,7 +14,6 @@ constructor(props) {
       books: [],
       selectValue: '',
       newBook: {},
-      a: []
   /**
    * TODO: Instead of using this state variable to keep track of which page
    * we're on, use the URL in the browser's address bar. This will ensure that
@@ -35,6 +34,7 @@ constructor(props) {
 //----------------------------------BookShelfs sort-------------------------//
   // Change selectValue on dropdown menu click
   handleClick = (bookNewShelf, e) => {
+    console.log('handleClick')
     let x, y,z
           x = e.target.value
           e.preventDefault
@@ -44,10 +44,12 @@ constructor(props) {
             console.log(y)
             y=y[0]
             y.shelf = x
-            z = this.setState((state) => {
+            z=this.setState((state) => {
              books:  {this.state.books.forEach(function(book, index){
                 if (book.id === y.id) {
                   book=y
+                  // update on server
+                  BooksAPI.update(y, x)
                 }
                 else if (book.id !== y.id) {
                   book = book
@@ -57,6 +59,8 @@ constructor(props) {
             if (x === 'none') {
               this.removeBook(bookNewShelf)
               console.log('book will be removed')
+              BooksAPI.update(bookNewShelf, 'none')
+              console.log('deleted?!')
             }
 
   }
@@ -69,6 +73,7 @@ constructor(props) {
     }
 
 handleNewBook = (bookNewShelf, e) => {
+  console.log('handlenewbook')
   let x, y, z
   z=[]
       console.log('bookNewShelf '+ bookNewShelf.book.id)
@@ -110,20 +115,23 @@ handleNewBook = (bookNewShelf, e) => {
             <Header/>
 
             {/* All bookshelves and Categories */}
-            <BookShelf books={this.state.books}
-            handleClick={this.handleClick}
-            readStatus= { this.state.books.filter((b) => b.shelf ===  'currentlyReading')}
-            heading = {'Currently Reading'}/>
+            <BookShelf
+              books={this.state.books}
+              handleClick={this.handleClick}
+              readStatus= { this.state.books.filter((b) => b.shelf ===  'currentlyReading')}
+              heading = {'Currently Reading'}/>
 
-            <BookShelf books={this.state.books}
-            handleClick={this.handleClick}
-            readStatus= { this.state.books.filter((b) => b.shelf ===  'wantToRead')}
-            heading= {'Want to read'}/>
+            <BookShelf
+              books={this.state.books}
+              handleClick={this.handleClick}
+              readStatus= { this.state.books.filter((b) => b.shelf ===  'wantToRead')}
+              heading= {'Want to read'}/>
 
-            <BookShelf books={this.state.books}
-            handleClick={this.handleClick}
-            readStatus= { this.state.books.filter((b) => b.shelf ===  'read')}
-            heading = {'Read'}/>
+            <BookShelf
+              books={this.state.books}
+              handleClick={this.handleClick}
+              readStatus= { this.state.books.filter((b) => b.shelf ===  'read')}
+              heading = {'Read'}/>
 
             {/*Button to search */}
             <div className="open-search">
