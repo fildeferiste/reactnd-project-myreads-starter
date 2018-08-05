@@ -14,14 +14,7 @@ constructor(props) {
       books: [],
       selectValue: '',
       newBook: {},
-  /**
-   * TODO: Instead of using this state variable to keep track of which page
-   * we're on, use the URL in the browser's address bar. This will ensure that
-   * users can use the browser's back and forward buttons to navigate between
-   * pages, as well as provide a good URL they can bookmark and share.
-   */
     }
-  //this.handleClick = this.handleClick.bind(this)
   }
 
 // get Books from Server
@@ -72,35 +65,31 @@ constructor(props) {
       })
     }
 
+// Sort Books from Search
 handleNewBook = (bookNewShelf, e) => {
-  console.log('handlenewbook')
   let x, y, z
   z=[]
-      console.log('bookNewShelf '+ bookNewShelf.book.id)
-      x = e.target.value
-      e.preventDefault
-      BooksAPI.get(bookNewShelf.book.id).then(
-        (response) =>
-          {response.shelf = x
+  x = e.target.value
+  e.preventDefault
+  BooksAPI.get(bookNewShelf.book.id).then(
+    (response) =>
+        {response.shelf = x
           this.setState({newBook:  response})
-          y=  this.state.books.filter((book) => book.id === bookNewShelf.book.id)
-          console.log(y.length)
+          y= this.state.books.filter((book) => book.id === bookNewShelf.book.id)
           // book id doesn't exist in books
           if (y.length === 0) {
-            console.log('y '+ y)
             this.setState((state)=>{
-                books: this.state.books.push(this.state.newBook)
-              })
-              // update on server
-              BooksAPI.update(this.state.newBook, x)
-          }
-         else if (y.length > 0){
+              books: this.state.books.push(this.state.newBook)
+            })
+            // update on server
+            BooksAPI.update(this.state.newBook, x)
+        }
+        else if (y.length > 0){
             y=  this.state.books.filter((book) => book.id === bookNewShelf.book.id)
-            console.log(y)
             y=y[0]
             y.shelf = x
             z=this.setState((state) => {
-          books:  {this.state.books.forEach(function(book, index){
+              books:  {this.state.books.forEach(function(book, index){
                 if (book.id === y.id) {
                   book=y
                   // update on server
@@ -110,9 +99,9 @@ handleNewBook = (bookNewShelf, e) => {
                   book = book
                 }
               })}
-        })
-          }
-         }
+            })
+        }
+      }
 ).catch(console.log('A problem.')) }
 
 
