@@ -7,28 +7,31 @@ class BookShelf extends React.Component {
 //this.props.handleClick.isReruired
 
   render() {
-let books = this.props.readStatus
-console.log(books)
-for(let n=0; n<books.length; n++) {
-  if (typeof(books[n].title) === undefined) {
-    books[n].title = 'Title unknown'
-  }
-  if (books[n].authors === undefined) {
-    books[n].authors = 'Author unknown'
-  }
-  if (books[n].imageLinks === undefined) {
-    books[n].imageLinks= {}
-    books[n].imageLinks.smallThumbnail = '/icon/add.svg'
-  }
-}
+    let books = this.props.readStatus
+
+    // If title, author or image doesn't exist, provide alternative
+    for(let n=0; n<books.length; n++) {
+      if (typeof(books[n].title) === undefined) {
+        books[n].title = 'Title unknown'
+      }
+      if (books[n].authors === undefined) {
+        books[n].authors = 'Author unknown'
+      }
+      if (books[n].imageLinks === undefined) {
+        books[n].imageLinks= {}
+        books[n].imageLinks.smallThumbnail = '/icon/add.svg'
+      }
+    }
 
 
     return (
       <div className="list-books-content">
+        {/*Bookshelf*/}
         <div className="bookshelf">
           <h2 className="bookshelf-title">{this.props.heading}</h2>
             <div className="bookshelf-books">
               <ol className="books-grid">
+                {/*Map over all Books for the same bookshelf*/}
                 {books.map( (book) => (
                   <li key={book.id}>
                     {console.log(book)}
@@ -45,8 +48,7 @@ for(let n=0; n<books.length; n++) {
                 </ol>
               </div>
             </div>
-            {/*//))}  */}
-          </div>  // Closing the main div
+          </div>
 
     )
 }

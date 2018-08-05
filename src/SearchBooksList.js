@@ -1,8 +1,7 @@
 import React from 'react'
-import * as BooksAPI from './BooksAPI'
 import BookShelfChanger from './BookShelfChanger'
 import {Link} from 'react-router-dom'
-
+import * as BooksAPI from './BooksAPI'
 
 
 class SearchBooksList extends React.Component {
@@ -13,7 +12,9 @@ class SearchBooksList extends React.Component {
     newBook: {},
   }
 
-  // Search bar - write input in state.query
+  // Search bar - write input in state.query - check for queries that would cause
+  // problems within the search, e.g. '' or undefined
+  // Display message if query is empty or undefined
     onSearch = (e) => {
       if (e || e === '') {
         if (e === '') {
@@ -31,28 +32,26 @@ class SearchBooksList extends React.Component {
         }
     }
 
+// get Books that match the query from the server
+// if there is no feed back or an error as a response, show an empty list.
+// Display message in those cases, otherwise show response
 updateBookSearch = (query) => {
     BooksAPI.search(String(query)).then( (bookSearch) => {
-      console.log(typeof(query))
             if (!bookSearch || bookSearch.error){
               this.setState({bookSearch : []})
               this.setState({noMatch: false})
               return bookSearch}
-          /*  else if (Array.isArray(bookSearch) && bookSearch!==[]) {
-              this.setState({noMatch: false})
-            } */
             if (this.state.bookSearch !== bookSearch) {
               this.setState({bookSearch: bookSearch})
               this.setState({noMatch: true})
             }
-
           }).catch(e => console.log(e))
       }
 
 
   render() {
     let books = this.state.bookSearch
-    console.log(books)
+    // Alternative if title, book or image is unknown
     if (books) {
       for(let n=0; n<books.length; n++) {
         if (typeof(books[n].title) === undefined) {
@@ -68,7 +67,9 @@ updateBookSearch = (query) => {
       }
     }
 
-
+// Search book list with alternating screens, display message if
+// no book results.
+// Search bar on top, stays in both cases
     return (
       <div>
         <div className="search-books">
@@ -85,7 +86,9 @@ updateBookSearch = (query) => {
           </div>
         </div>
 
-        {this.state.noMatch ? (  <div className="bookshelf">
+        <div>
+        { this.state.noMatch ? (
+          <div className="bookshelf">
           <h2 className="bookshelf-title">Search Results</h2>
           <div className="bookshelf-books">
             <ol className="books-grid">
@@ -103,17 +106,16 @@ updateBookSearch = (query) => {
                 </li> )) }
               </ol>
             </div>
-          </div>): (
+          </div>
+        ) : (
             <div style={{marginTop: '100px', textAlign: 'center'}}>
               <p>Sorry, we couldn't find any books that match</p>
               <p>Search by author or title with the search bar</p>
             </div>
-
-          )}
+          )} </div>
         </div>
       )
     }
-
   }
 
 export default SearchBooksList
@@ -121,4 +123,3 @@ export default SearchBooksList
 
 // Great thanks to:
 //https://dev.to/sage911/how-to-write-a-search-component-with-suggestions-in-react-d20
-                    {/*ref = {input => this.search = input}     join(' ')*/}
