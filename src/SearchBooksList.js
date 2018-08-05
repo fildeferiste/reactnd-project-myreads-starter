@@ -12,28 +12,39 @@ class SearchBooksList extends React.Component {
     query: [],
     noMatch: true,
     newBook: {},
-    a: []
   }
 
   // Search bar - write input in state.query
     onSearch = (e) => {
-      //e = e.split(' ')
-      //console.log('e'+e)
-      this.setState({
-        query: e})
-        this.updateBookSearch(e)
+      if (e || e === '') {
+        if (e === '') {
+          this.setState({query: e})
+          this.setState({noMatch: false})
+        }
+        else if (e !== '') {
+          this.setState({query: e})
+          this.updateBookSearch(e)
+        }
+      }
+     else if (typeof(e) === undefined) {
+          this.setState({query: ' '})
+          this.setState({noMatch: false})
+        }
     }
 
 updateBookSearch = (query) => {
-  console.log('query '+query)
     BooksAPI.search(String(query)).then( (bookSearch) => {
+      console.log(typeof(query))
             if (!bookSearch || bookSearch.error){
               this.setState({bookSearch : []})
+              this.setState({noMatch: false})
               return bookSearch}
-            else if (Array.isArray(bookSearch) && bookSearch!==[]) {
-            }
+          /*  else if (Array.isArray(bookSearch) && bookSearch!==[]) {
+              this.setState({noMatch: false})
+            } */
             if (this.state.bookSearch !== bookSearch) {
               this.setState({bookSearch: bookSearch})
+              this.setState({noMatch: true})
             }
 
           }).catch(e => console.log(e))
@@ -41,6 +52,23 @@ updateBookSearch = (query) => {
 
 
   render() {
+    let books = this.state.bookSearch
+    console.log(books)
+    if (books) {
+      for(let n=0; n<books.length; n++) {
+        if (typeof(books[n].title) === undefined) {
+          books[n].title = 'Title unknown'
+        }
+        if (books[n].authors === undefined) {
+          books[n].authors = 'Author unknown'
+        }
+        if (books[n].imageLinks === undefined) {
+          books[n].imageLinks= {}
+          books[n].imageLinks.smallThumbnail = '/icon/add.svg'
+        }
+      }
+    }
+
 
     return (
       <div>
@@ -77,16 +105,13 @@ updateBookSearch = (query) => {
               </ol>
             </div>
           </div>): (
-            <div style={{marginTop: '100px', textAlign: 'center'}}>Sorry, we couldn't find any books that match</div>
+            <div style={{marginTop: '100px', textAlign: 'center'}}>
+              <p>Sorry, we couldn't find any books that match</p>
+              <p>Search by author or title with the search bar</p>
+            </div>
 
           )}
-
-
-
         </div>
-
-
-
       )
     }
 
