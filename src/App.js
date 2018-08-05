@@ -13,6 +13,8 @@ constructor(props) {
     this.state = {
       books: [],
       selectValue: '',
+      newBook: {},
+      a: []
   /**
    * TODO: Instead of using this state variable to keep track of which page
    * we're on, use the URL in the browser's address bar. This will ensure that
@@ -33,15 +35,16 @@ constructor(props) {
 //----------------------------------BookShelfs sort-------------------------//
   // Change selectValue on dropdown menu click
   handleClick = (bookNewShelf, e) => {
-    let x, y
+    let x, y,z
           x = e.target.value
-          this.setState({selectValue: x}),
-            console.log(this.state.books),
-            y=  this.state.books.filter((book) => book.id == bookNewShelf.book.id),
+          e.preventDefault
+          this.setState({selectValue: x})
+            console.log(this.state.books)
+            y=  this.state.books.filter((book) => book.id === bookNewShelf.book.id)
             console.log(y)
             y=y[0]
             y.shelf = x
-            this.setState((state) => {
+            z = this.setState((state) => {
              books:  {this.state.books.forEach(function(book, index){
                 if (book.id === y.id) {
                   book=y
@@ -51,6 +54,10 @@ constructor(props) {
                 }
               })}
             })
+            if (x === 'none') {
+              this.removeBook(bookNewShelf)
+              console.log('book will be removed')
+            }
 
   }
 
@@ -61,28 +68,30 @@ constructor(props) {
       })
     }
 
+handleNewBook = (bookNewShelf, e) => {
+  let x, y, z
+  z=[]
+      console.log('bookNewShelf '+ bookNewShelf.book.id)
+      x = e.target.value
+      e.preventDefault
+      BooksAPI.get(bookNewShelf.book.id).then(
+        (response) =>
+          {response.shelf = x
+          this.setState({newBook:  response})
+          y=  this.state.books.filter((book) => book.id === bookNewShelf.book.id)
+          if (y) {
+            console.log('y '+ this.state.books)
+            console.log('z '+z)
+            this.setState((state)=>{
+              books: this.state.books.push(this.state.newBook)
+            })
+            // update on server
+            BooksAPI.update(this.state.newBook, x)
 
-  componentDidUpdate(){
-    console.log('updated '+ this.state.books)
-    this.setState((prevState) =>
-    {if (prevState.books !== this.state.books){
-            this.setState( {
-            currentlyReading: this.state.books.filter((b) => b.shelf ===  'currentlyReading'),
-            wantToRead: this.state.books.filter((b) => b.shelf === 'wantToRead'),
-            read: this.state.books.filter((b) => b.shelf === 'read')
-          })
-        console.log(this.state.books)
-    }})
-  }
+          }
 
-// Search bar
-  onSearch = (e) => {
-    e.preventDefault()
-    this.setState({
-      query: this.search.value
-    })
-    console.log('search-submit')
-  }
+      }).catch(console.log('A problem.'))
+}
 
 
   render() {
@@ -91,7 +100,7 @@ constructor(props) {
 
         {/*Search Page*/}
         <Route path="/search" render={()=> (
-              <SearchBooksList handleClick={this.handleClick}/>
+              <SearchBooksList handleClick={this.handleClick} books={this.state.books} handleNewBook={this.handleNewBook}/>
         )}/>
 
         {/*Bookshelves*/}
